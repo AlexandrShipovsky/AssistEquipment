@@ -25,7 +25,6 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */     
-
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -90,17 +89,17 @@ void Start_CAN_TX_Task(void const * argument)
 		TxHeader.StdId = 0x00FF;
 		TxHeader.RTR = CAN_RTR_DATA;
 		TxHeader.IDE = CAN_ID_STD;
-		TxHeader.TransmitGlobalTime = DISABLE;bb
+		TxHeader.TransmitGlobalTime = DISABLE;
 
 		volatile uint8_t buf[8] = {0xAA};
 		uint32_t TxMailBox;
 
 
-		if (HAL_CAN_AddTxMessage(&hcan, &TxHeader, buf, &TxMailBox) != HAL_OK)
+		if (HAL_CAN_AddTxMessage(&hcan, &TxHeader, (uint8_t *)buf, &TxMailBox) != HAL_OK)
 		{
 			Error_Handler();
 		}
-    osDelay(100);
+    vTaskDelay(300);
   }
   /* USER CODE END Start_CAN_TX_Task */
 }

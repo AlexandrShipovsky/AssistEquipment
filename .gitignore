@@ -6,3 +6,6 @@
 .vscode/BROWSE.DB-wal
 .gitignore
 .vscode/AssistEquipment.code-workspace
+.vscode/BROWSE.2.DB
+.vscode/BROWSE.2.DB-shm
+.vscode/BROWSE.2.DB-wal
