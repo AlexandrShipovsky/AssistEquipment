@@ -71,7 +71,39 @@ void vApplicationGetIdleTaskMemory( StaticTask_t **ppxIdleTaskTCBBuffer, StackTy
 
 /* Private application code --------------------------------------------------*/
 /* USER CODE BEGIN Application */
-     
+/**
+* @brief Function implementing the CAN_TX_Task thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_Start_CAN_TX_Task */
+void Start_CAN_TX_Task(void const * argument)
+{
+  /* USER CODE BEGIN Start_CAN_TX_Task */
+  /* Infinite loop */
+  for(;;)
+  {
+    CAN_TxHeaderTypeDef TxHeader;
+		extern CAN_HandleTypeDef hcan;
+
+		TxHeader.DLC = 8;
+		TxHeader.StdId = 0x00FF;
+		TxHeader.RTR = CAN_RTR_DATA;
+		TxHeader.IDE = CAN_ID_STD;
+		TxHeader.TransmitGlobalTime = DISABLE;bb
+
+		volatile uint8_t buf[8] = {0xAA};
+		uint32_t TxMailBox;
+
+
+		if (HAL_CAN_AddTxMessage(&hcan, &TxHeader, buf, &TxMailBox) != HAL_OK)
+		{
+			Error_Handler();
+		}
+    osDelay(100);
+  }
+  /* USER CODE END Start_CAN_TX_Task */
+}
 /* USER CODE END Application */
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

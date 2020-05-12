@@ -212,6 +212,29 @@ static void MX_CAN_Init(void)
     Error_Handler();
   }
   /* USER CODE BEGIN CAN_Init 2 */
+  CAN_FilterTypeDef CAN_Filter;
+  CAN_Filter.FilterBank = 0;
+  CAN_Filter.FilterMode = CAN_FILTERMODE_IDMASK;
+  CAN_Filter.FilterScale = CAN_FILTERSCALE_32BIT;
+  CAN_Filter.FilterMaskIdHigh = 0x0000;
+  CAN_Filter.FilterMaskIdLow = 0x0000;
+  CAN_Filter.FilterFIFOAssignment = CAN_RX_FIFO0;
+  CAN_Filter.FilterActivation = ENABLE;
+
+  if (HAL_CAN_ConfigFilter(&hcan, &CAN_Filter) != HAL_OK)
+  {
+    Error_Handler();
+  }
+
+  if (HAL_CAN_Start(&hcan) != HAL_OK)
+  {
+    Error_Handler();
+  }
+
+  if (HAL_CAN_ActivateNotification(&hcan, CAN_IT_RX_FIFO0_MSG_PENDING) != HAL_OK)
+  {
+    Error_Handler();
+  }
 
   /* USER CODE END CAN_Init 2 */
 
@@ -244,7 +267,22 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
+void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
+{
+  volatile uint8_t buf[8];
+  CAN_RxHeaderTypeDef RxHeader;
 
+  
+  if (HAL_CAN_GetRxMessage(hcan, CAN_RX_FIFO0, &RxHeader, buf) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  if(buf[0] == 0xAA)
+  {
+    HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_13);
+  }
+  
+}
 /* USER CODE END 4 */
 
 /* USER CODE BEGIN Header_StartDefaultTask */
@@ -272,7 +310,7 @@ void StartDefaultTask(void const * argument)
 * @retval None
 */
 /* USER CODE END Header_Start_CAN_TX_Task */
-void Start_CAN_TX_Task(void const * argument)
+__weak void Start_CAN_TX_Task(void const * argument)
 {
   /* USER CODE BEGIN Start_CAN_TX_Task */
   /* Infinite loop */

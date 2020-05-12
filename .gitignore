@@ -1,3 +1,8 @@
 .vscode/c_cpp_properties.json
 .vscode/iar.json
 .vscode/tasks.json
+.vscode/BROWSE.DB
+.vscode/BROWSE.DB-shm
+.vscode/BROWSE.DB-wal
+.gitignore
+.vscode/AssistEquipment.code-workspace
