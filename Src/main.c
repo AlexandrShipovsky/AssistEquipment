@@ -278,7 +278,7 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
   {
     Error_Handler();
   }
-  if(buf[0] == 0xAA)
+  if(buf[1] == 0xAA)
   {
     HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_13);
   }

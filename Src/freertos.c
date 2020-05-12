@@ -91,7 +91,7 @@ void Start_CAN_TX_Task(void const * argument)
 		TxHeader.IDE = CAN_ID_STD;
 		TxHeader.TransmitGlobalTime = DISABLE;
 
-		volatile uint8_t buf[8] = {0xAA};
+		volatile uint8_t buf[8] = {'5',0xAA,0xAA,0xFF};
 		uint32_t TxMailBox;
 
 
