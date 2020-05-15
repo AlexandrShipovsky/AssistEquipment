@@ -49,7 +49,7 @@
 
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN FunctionPrototypes */
-   
+
 /* USER CODE END FunctionPrototypes */
 
 /* GetIdleTaskMemory prototype (linked to static allocation support) */
@@ -58,14 +58,14 @@ void vApplicationGetIdleTaskMemory( StaticTask_t **ppxIdleTaskTCBBuffer, StackTy
 /* USER CODE BEGIN GET_IDLE_TASK_MEMORY */
 static StaticTask_t xIdleTaskTCBBuffer;
 static StackType_t xIdleStack[configMINIMAL_STACK_SIZE];
-  
-void vApplicationGetIdleTaskMemory( StaticTask_t **ppxIdleTaskTCBBuffer, StackType_t **ppxIdleTaskStackBuffer, uint32_t *pulIdleTaskStackSize )
+
+void vApplicationGetIdleTaskMemory(StaticTask_t **ppxIdleTaskTCBBuffer, StackType_t **ppxIdleTaskStackBuffer, uint32_t *pulIdleTaskStackSize)
 {
   *ppxIdleTaskTCBBuffer = &xIdleTaskTCBBuffer;
   *ppxIdleTaskStackBuffer = &xIdleStack[0];
   *pulIdleTaskStackSize = configMINIMAL_STACK_SIZE;
   /* place for user code */
-}                   
+}
 /* USER CODE END GET_IDLE_TASK_MEMORY */
 
 /* Private application code --------------------------------------------------*/
@@ -76,29 +76,34 @@ void vApplicationGetIdleTaskMemory( StaticTask_t **ppxIdleTaskTCBBuffer, StackTy
 * @retval None
 */
 /* USER CODE END Header_Start_CAN_TX_Task */
-void Start_CAN_TX_Task(void const * argument)
+void Start_CAN_TX_Task(void const *argument)
 {
   /* USER CODE BEGIN Start_CAN_TX_Task */
   /* Infinite loop */
-  for(;;)
+  
+
+  for (;;)
   {
     CAN_TxHeaderTypeDef TxHeader;
-		extern CAN_HandleTypeDef hcan;
+    extern CAN_HandleTypeDef hcan;
+    uint8_t buf[8] = {'5', 0xAA, 0xAA, 0xFF,0xFF,0xFF,0xFF,0xFF};
+    uint32_t TxMailBox; //= CAN_TX_MAILBOX0;
 
-		TxHeader.DLC = 8;
-		TxHeader.StdId = 0x00FF;
-		TxHeader.RTR = CAN_RTR_DATA;
-		TxHeader.IDE = CAN_ID_STD;
-		TxHeader.TransmitGlobalTime = DISABLE;
+    TxHeader.DLC = 8;
+    TxHeader.StdId = 0x0000;
+    TxHeader.RTR = CAN_RTR_DATA;
+    TxHeader.IDE = CAN_ID_STD;
+    TxHeader.TransmitGlobalTime = DISABLE;
 
-		volatile uint8_t buf[8] = {'5',0xAA,0xAA,0xFF};
-		uint32_t TxMailBox;
-
-
-		if (HAL_CAN_AddTxMessage(&hcan, &TxHeader, (uint8_t *)buf, &TxMailBox) != HAL_OK)
-		{
-			Error_Handler();
-		}
+    // if (HAL_CAN_GetTxMailboxesFreeLevel(&hcan) > 0U)
+    // {
+    taskENTER_CRITICAL();
+    if (HAL_CAN_AddTxMessage(&hcan, &TxHeader, buf, &TxMailBox) != HAL_OK)
+    {
+      Error_Handler();
+    }
+    taskEXIT_CRITICAL();
+    // }
     vTaskDelay(300);
   }
   /* USER CODE END Start_CAN_TX_Task */

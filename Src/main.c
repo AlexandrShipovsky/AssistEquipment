@@ -96,7 +96,6 @@ int main(void)
   MX_GPIO_Init();
   MX_CAN_Init();
   /* USER CODE BEGIN 2 */
-
   /* USER CODE END 2 */
 
   /* USER CODE BEGIN RTOS_MUTEX */
@@ -197,7 +196,7 @@ static void MX_CAN_Init(void)
   /* USER CODE END CAN_Init 1 */
   hcan.Instance = CAN1;
   hcan.Init.Prescaler = 9;
-  hcan.Init.Mode = CAN_MODE_LOOPBACK;
+  hcan.Init.Mode = CAN_MODE_NORMAL;
   hcan.Init.SyncJumpWidth = CAN_SJW_2TQ;
   hcan.Init.TimeSeg1 = CAN_BS1_13TQ;
   hcan.Init.TimeSeg2 = CAN_BS2_2TQ;
@@ -226,15 +225,17 @@ static void MX_CAN_Init(void)
     Error_Handler();
   }
 
+   if (HAL_CAN_ActivateNotification(&hcan, CAN_IT_RX_FIFO0_MSG_PENDING) != HAL_OK)
+  {
+    Error_Handler();
+  }
+
   if (HAL_CAN_Start(&hcan) != HAL_OK)
   {
     Error_Handler();
   }
 
-  if (HAL_CAN_ActivateNotification(&hcan, CAN_IT_RX_FIFO0_MSG_PENDING) != HAL_OK)
-  {
-    Error_Handler();
-  }
+ 
 
   /* USER CODE END CAN_Init 2 */
 
@@ -253,7 +254,6 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOC_CLK_ENABLE();
   __HAL_RCC_GPIOD_CLK_ENABLE();
   __HAL_RCC_GPIOA_CLK_ENABLE();
-  __HAL_RCC_GPIOB_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(LED_GPIO_Port, LED_Pin, GPIO_PIN_RESET);
