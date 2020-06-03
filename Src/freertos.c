@@ -70,6 +70,19 @@ void vApplicationGetIdleTaskMemory(StaticTask_t **ppxIdleTaskTCBBuffer, StackTyp
 
 /* Private application code --------------------------------------------------*/
 /* USER CODE BEGIN Application */
+void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
+{
+  volatile uint8_t buf[8];
+  CAN_RxHeaderTypeDef RxHeader;
+
+  
+  if (HAL_CAN_GetRxMessage(hcan, CAN_RX_FIFO0, &RxHeader, (uint8_t *)buf) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  // Обработка принимаемого сообщения
+  
+}
 /**
 * @brief Function implementing the CAN_TX_Task thread.
 * @param argument: Not used
@@ -95,15 +108,12 @@ void Start_CAN_TX_Task(void const *argument)
     TxHeader.IDE = CAN_ID_STD;
     TxHeader.TransmitGlobalTime = DISABLE;
 
-    // if (HAL_CAN_GetTxMailboxesFreeLevel(&hcan) > 0U)
-    // {
     taskENTER_CRITICAL();
     if (HAL_CAN_AddTxMessage(&hcan, &TxHeader, buf, &TxMailBox) != HAL_OK)
     {
       Error_Handler();
     }
     taskEXIT_CRITICAL();
-    // }
     vTaskDelay(300);
   }
   /* USER CODE END Start_CAN_TX_Task */
