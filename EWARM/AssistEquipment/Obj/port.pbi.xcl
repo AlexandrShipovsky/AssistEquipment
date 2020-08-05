@@ -21,6 +21,10 @@ C:\Users\Чистое небо\Desktop\Э.01.00.00 Беспилотный мот
 -I
 C:\Users\Чистое небо\Desktop\Э.01.00.00 Беспилотный мотодельтаплан\Вспомогательное электронное оборудование\firmware\AssistEquipment\EWARM/../Middlewares/Third_Party/FreeRTOS/Source/portable/IAR/ARM_CM3
 -I
+C:\Users\Чистое небо\Desktop\Э.01.00.00 Беспилотный мотодельтаплан\Вспомогательное электронное оборудование\firmware\AssistEquipment\EWARM\..\libraries\Servo
+-I
+C:\Users\Чистое небо\Desktop\Э.01.00.00 Беспилотный мотодельтаплан\Вспомогательное электронное оборудование\firmware\AssistEquipment\EWARM\..\libraries\common
+-I
 C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.1\arm\inc
 -I
 C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.1\arm\inc\c
@@ -40,6 +44,10 @@ C:\Users\Чистое небо\Desktop\Э.01.00.00 Беспилотный мот
 C:\Users\Чистое небо\Desktop\Э.01.00.00 Беспилотный мотодельтаплан\Вспомогательное электронное оборудование\firmware\AssistEquipment\Middlewares\Third_Party\FreeRTOS\Source\CMSIS_RTOS
 -I
 C:\Users\Чистое небо\Desktop\Э.01.00.00 Беспилотный мотодельтаплан\Вспомогательное электронное оборудование\firmware\AssistEquipment\Middlewares\Third_Party\FreeRTOS\Source\portable\IAR\ARM_CM3
+-I
+C:\Users\Чистое небо\Desktop\Э.01.00.00 Беспилотный мотодельтаплан\Вспомогательное электронное оборудование\firmware\AssistEquipment\libraries\Servo
+-I
+C:\Users\Чистое небо\Desktop\Э.01.00.00 Беспилотный мотодельтаплан\Вспомогательное электронное оборудование\firmware\AssistEquipment\libraries\common
 -D__CHAR_BITS__=8
 -D__CHAR_MAX__=0xff
 -D__CHAR_MIN__=0

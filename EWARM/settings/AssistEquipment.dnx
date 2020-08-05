@@ -9,7 +9,7 @@
         <LeaveTargetRunning>_ 0</LeaveTargetRunning>
     </StLinkDriver>
     <DebugChecksum>
-        <Checksum>1077717762</Checksum>
+        <Checksum>612904895</Checksum>
     </DebugChecksum>
     <Exceptions>
         <StopOnUncaught>_ 0</StopOnUncaught>
@@ -30,8 +30,8 @@
         <ByteLimit>50</ByteLimit>
     </Stack>
     <Disassembly>
-        <InstrCount>0</InstrCount>
         <MixedMode>1</MixedMode>
+        <InstrCount>0</InstrCount>
     </Disassembly>
     <CallStack>
         <ShowArgs>0</ShowArgs>
@@ -54,6 +54,12 @@
         <ITMportsLogFile>0</ITMportsLogFile>
         <ITMlogFile>$PROJ_DIR$\ITM.log</ITMlogFile>
     </SWOTraceHWSettings>
+    <struct_types>
+        <Fmt0>ServoTypeDef-angle	3	0</Fmt0>
+    </struct_types>
+    <array_types>
+        <Fmt0>uint8_t[8]	3	0</Fmt0>
+    </array_types>
     <Trace2>
         <Enabled>0</Enabled>
         <ShowSource>0</ShowSource>
@@ -125,9 +131,7 @@
         <mode>0</mode>
     </DisassembleMode>
     <Breakpoints2>
-        <Bp0>_ 1 "EMUL_CODE" "{$PROJ_DIR$\..\Src\main.c}.277.3" 0 0 1 "" 0 "" 0</Bp0>
-        <Bp1>_ 1 "EMUL_CODE" "{$PROJ_DIR$\..\Src\main.c}.356.1" 0 0 1 "" 0 "" 0</Bp1>
-        <Count>2</Count>
+        <Count>0</Count>
     </Breakpoints2>
     <Aliases>
         <Count>0</Count>
