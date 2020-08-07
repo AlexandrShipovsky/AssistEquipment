@@ -109,7 +109,7 @@ void Start_CAN_TX_Task(void const *argument)
   uint8_t buf[4] = {0x00, 0x00, 0x00, 0x00};
   uint32_t TxMailBox; //= CAN_TX_MAILBOX0;
 
-  TxHeader.DLC = 0;
+  TxHeader.DLC = 4;
   TxHeader.StdId = 0x0000;
   TxHeader.RTR = CAN_RTR_DATA;
   TxHeader.IDE = CAN_ID_STD;
@@ -129,7 +129,7 @@ void Start_CAN_TX_Task(void const *argument)
     }
     taskEXIT_CRITICAL();
     HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
-    vTaskDelay(300);
+    vTaskDelay(100);
   }
   /* USER CODE END Start_CAN_TX_Task */
 }

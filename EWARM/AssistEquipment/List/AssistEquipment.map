@@ -1,6 +1,6 @@
 ###############################################################################
 #
-# IAR ELF Linker V8.30.1.114/W32 for ARM                  04/Aug/2020  16:35:19
+# IAR ELF Linker V8.30.1.114/W32 for ARM                  07/Aug/2020  12:04:15
 # Copyright 2007-2018 IAR Systems AB.
 #
 #    Output file  =  
@@ -16,7 +16,7 @@
 #        электронное
 #        оборудование\firmware\AssistEquipment\EWARM\AssistEquipment\List\AssistEquipment.map
 #    Command line =  
-#        -f C:\Users\A146~1\AppData\Local\Temp\EWB4F6.tmp
+#        -f C:\Users\A146~1\AppData\Local\Temp\EW9960.tmp
 #        ("C:\Users\Чистое небо\Desktop\Э.01.00.00
 #        Беспилотный
 #        мотодельтаплан\Вспомогательное
@@ -590,8 +590,8 @@ ServoSetAngle            0x800'1b85   0x6c  Code  Gb  servo.o [1]
 ServoStart               0x800'1b77    0xe  Code  Gb  servo.o [1]
 ServoStop                0x800'1b69    0xe  Code  Gb  servo.o [1]
 SignalStatus            0x2000'147e    0x1  Data  Gb  main.o [1]
-StartDefaultTask         0x800'0b09   0x30  Code  Gb  freertos.o [1]
-Start_CAN_TX_Task        0x800'0a9b   0x6e  Code  Gb  freertos.o [1]
+StartDefaultTask         0x800'0b07   0x30  Code  Gb  freertos.o [1]
+Start_CAN_TX_Task        0x800'0a9b   0x6c  Code  Gb  freertos.o [1]
 SysTick_Handler          0x800'1385   0x28  Code  Gb  port.o [1]
 SystemClock_Config       0x800'0ec7   0x6a  Code  Gb  main.o [1]
 SystemCoreClock         0x2000'0008    0x4  Data  Gb  system_stm32f1xx.o [1]
