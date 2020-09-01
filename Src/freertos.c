@@ -24,7 +24,7 @@
 #include "main.h"
 
 /* Private includes ----------------------------------------------------------*/
-/* USER CODE BEGIN Includes */     
+/* USER CODE BEGIN Includes */
 #include "servo.h"
 #include "prothawk.h"
 /* USER CODE END Includes */
@@ -50,8 +50,11 @@ ServoTypeDef ServoAccel;
 uint8_t RPM = 0x00;
 uint8_t FuelCapacity = 0x00;
 
+uint32_t experiment = 0;
+
 extern uint8_t SignalStatus;
 extern TIM_HandleTypeDef htim3;
+extern TIM_HandleTypeDef htim2;
 /* USER CODE END Variables */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -60,7 +63,7 @@ extern TIM_HandleTypeDef htim3;
 /* USER CODE END FunctionPrototypes */
 
 /* GetIdleTaskMemory prototype (linked to static allocation support) */
-void vApplicationGetIdleTaskMemory( StaticTask_t **ppxIdleTaskTCBBuffer, StackType_t **ppxIdleTaskStackBuffer, uint32_t *pulIdleTaskStackSize );
+void vApplicationGetIdleTaskMemory(StaticTask_t **ppxIdleTaskTCBBuffer, StackType_t **ppxIdleTaskStackBuffer, uint32_t *pulIdleTaskStackSize);
 
 /* USER CODE BEGIN GET_IDLE_TASK_MEMORY */
 static StaticTask_t xIdleTaskTCBBuffer;
@@ -77,6 +80,19 @@ void vApplicationGetIdleTaskMemory(StaticTask_t **ppxIdleTaskTCBBuffer, StackTyp
 
 /* Private application code --------------------------------------------------*/
 /* USER CODE BEGIN Application */
+void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim) // колбек по захвату
+{
+  if (htim->Instance == TIM2)
+  {
+    if (htim->Channel == HAL_TIM_ACTIVE_CHANNEL_3) // RISING с LOW на HIGH
+    {
+      experiment++;
+      __HAL_TIM_SET_COUNTER(&htim2, 0x0000); // обнуление счётчика
+    }
+
+  }
+}
+
 void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
 {
   volatile uint8_t buf[8];
@@ -86,11 +102,25 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
   {
     Error_Handler();
   }
-  if (buf[0] == HeaderPropultionCommand)
+  switch (buf[0])
   {
+  case HeaderPropultionCommand:
     ServoAccel.angle = buf[1];
     SignalStatus = 1;
-    __HAL_TIM_SET_COUNTER(&htim3,0x00);
+    __HAL_TIM_SET_COUNTER(&htim3, 0x00);
+    break;
+  case StopMotorRequest:
+    if (buf[1] == DISABLEMOTOR)
+    {
+      HAL_GPIO_WritePin(DrownMotor_GPIO_Port, DrownMotor_Pin, GPIO_PIN_SET);
+    }
+    if (buf[1] == ENABLEMOTOR)
+    {
+      HAL_GPIO_WritePin(DrownMotor_GPIO_Port, DrownMotor_Pin, GPIO_PIN_RESET);
+    }
+    break;
+  default:
+    break;
   }
   // Обработка принимаемого сообщения
 }
@@ -144,21 +174,25 @@ void Start_CAN_TX_Task(void const *argument)
 void StartDefaultTask(void const *argument)
 {
   /* USER CODE BEGIN 5 */
-  extern TIM_HandleTypeDef htim2;
+  extern TIM_HandleTypeDef htim1;
 
-  ServoAccel.Tim_PWM = &htim2;
+  ServoAccel.Tim_PWM = &htim1;
   ServoAccel.TimChannel = TIM_CHANNEL_1;
+  ServoAccel.DirOfRot = REVERSE_ROTATION;
   //ServoAccel.angle = 50;
+
   /* Infinite loop */
   for (;;)
   {
-    if(SignalStatus)
+    if (SignalStatus)
     {
       ServoStart(&ServoAccel);
     }
     else
     {
-      ServoStop(&ServoAccel);
+      ServoAccel.angle = 0x00;
+      ServoSetAngle(&ServoAccel);
+      //ServoStop(&ServoAccel);
     }
     ServoSetAngle(&ServoAccel);
     vTaskDelay(10);

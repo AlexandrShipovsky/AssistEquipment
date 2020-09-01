@@ -27,12 +27,19 @@ extern "C"
     TIM_HandleTypeDef *Tim_PWM;
     int8_t CorrectionNeutral;
     uint8_t angle;
+    uint8_t DirOfRot;
   } ServoTypeDef;
 
+  typedef enum
+  {
+    DIRECT_ROTATION = 0,
+    REVERSE_ROTATION = 1
+  }ServoDir;
+
 // ���������
-#define ServoNeutral (uint16_t)1520;  //usec
-#define ServoMaxWidth (uint16_t)2400; //usec
-#define ServoMinWidth (uint16_t)544;  //usec
+static uint16_t ServoNeutral = 500;//usec
+static uint16_t ServoMaxWidth = 1800;//2400; //usec
+static uint16_t ServoMinWidth = 1000;//544;  //usec
 #define ServoMaxAngle 100
 #define ServoMinAngle 0
 

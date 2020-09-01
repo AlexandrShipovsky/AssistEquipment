@@ -51,7 +51,14 @@ HAL_StatusTypeDef ServoSetAngle(ServoTypeDef *servo)
   }
 
   //HAL_TIM_PWM_Stop(servo->Tim_PWM, servo->TimChannel); // Стоп ШИМ
-  pulse = 544 + (servo->angle * (1856)) / 100;
+  if(servo->DirOfRot)
+  {
+    pulse = ServoMinWidth + ((100 - servo->angle) * (ServoMaxWidth - ServoMinWidth)) / 100;
+  }
+  else
+  {
+    pulse = ServoMinWidth + (servo->angle * (ServoMaxWidth - ServoMinWidth)) / 100;
+  }
   __HAL_TIM_SET_COMPARE(servo->Tim_PWM, servo->TimChannel, (uint16_t)pulse - 1); // Ширина импульса в мкс
 
   //HAL_TIM_PWM_Start(servo->Tim_PWM, servo->TimChannel); // Старт ШИМ

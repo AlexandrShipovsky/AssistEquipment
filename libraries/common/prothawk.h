@@ -18,7 +18,13 @@ extern "C"
 {
 #endif
 
+
+
 #include "stdint.h"
+
+#define DISABLEMOTOR (uint8_t)100
+#define ENABLEMOTOR (uint8_t)200
+
     typedef enum
     {
         PreFlightTestRequest = 1,
@@ -30,6 +36,7 @@ extern "C"
         PING = 7,
         TelemetryRequest = 8,
         TelemetryResponse = 9,
+        StopMotorRequest = 10,
         ENDCOMMAND
     } HawkCommandsTypeDef;
 
@@ -56,11 +63,13 @@ extern "C"
         /*commands[PreFlightTestResponse] = */ 9,
         /*commands[WingCalibrationRequest] = */ 9,
         /*commands[WingCalibrationResponse] = */ 9,
-        /*commands[PilotCommand] = */ 9,
+        /*commands[PilotCommand] = */ 7,
         /*commands[PilotCommandResponse] = */ 23,
         /*commands[PING] = */ 9,
         /*commands[TelemetryRequest] = */ 1,
-        /*commands[TelemetryResponse] = */ 21};
+        /*commands[TelemetryResponse] = */ 18,
+        /*commands[StopMotorRequest] = */ 2,
+        };
 
 #ifdef __cplusplus
 }
