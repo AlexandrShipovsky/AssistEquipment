@@ -44,12 +44,15 @@
 /* Private variables ---------------------------------------------------------*/
 CAN_HandleTypeDef hcan;
 
+IWDG_HandleTypeDef hiwdg;
+
 TIM_HandleTypeDef htim1;
 TIM_HandleTypeDef htim2;
 TIM_HandleTypeDef htim3;
 
 osThreadId defaultTaskHandle;
 osThreadId CAN_TX_TaskHandle;
+osThreadId RPMTaskHandle;
 /* USER CODE BEGIN PV */
 uint8_t SignalStatus = 0;
 /* USER CODE END PV */
@@ -61,8 +64,10 @@ static void MX_CAN_Init(void);
 static void MX_TIM2_Init(void);
 static void MX_TIM3_Init(void);
 static void MX_TIM1_Init(void);
+static void MX_IWDG_Init(void);
 void StartDefaultTask(void const * argument);
 void Start_CAN_TX_Task(void const * argument);
+void StartRPMTask(void const * argument);
 
 /* USER CODE BEGIN PFP */
 
@@ -105,6 +110,7 @@ int main(void)
   MX_TIM2_Init();
   MX_TIM3_Init();
   MX_TIM1_Init();
+  MX_IWDG_Init();
   /* USER CODE BEGIN 2 */
   HAL_TIM_IC_Start_IT(&htim2, TIM_CHANNEL_3);
   //HAL_TIM_IC_Start_IT(&htim2, TIM_CHANNEL_4);
@@ -134,6 +140,10 @@ int main(void)
   /* definition and creation of CAN_TX_Task */
   osThreadDef(CAN_TX_Task, Start_CAN_TX_Task, osPriorityNormal, 0, 512);
   CAN_TX_TaskHandle = osThreadCreate(osThread(CAN_TX_Task), NULL);
+
+  /* definition and creation of RPMTask */
+  osThreadDef(RPMTask, StartRPMTask, osPriorityAboveNormal, 0, 128);
+  RPMTaskHandle = osThreadCreate(osThread(RPMTask), NULL);
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
@@ -165,10 +175,11 @@ void SystemClock_Config(void)
 
   /** Initializes the CPU, AHB and APB busses clocks 
   */
-  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSE;
+  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_LSI|RCC_OSCILLATORTYPE_HSE;
   RCC_OscInitStruct.HSEState = RCC_HSE_ON;
   RCC_OscInitStruct.HSEPredivValue = RCC_HSE_PREDIV_DIV1;
   RCC_OscInitStruct.HSIState = RCC_HSI_ON;
+  RCC_OscInitStruct.LSIState = RCC_LSI_ON;
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
   RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
   RCC_OscInitStruct.PLL.PLLMUL = RCC_PLL_MUL9;
@@ -248,6 +259,34 @@ static void MX_CAN_Init(void)
   }
 
   /* USER CODE END CAN_Init 2 */
+
+}
+
+/**
+  * @brief IWDG Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_IWDG_Init(void)
+{
+
+  /* USER CODE BEGIN IWDG_Init 0 */
+
+  /* USER CODE END IWDG_Init 0 */
+
+  /* USER CODE BEGIN IWDG_Init 1 */
+
+  /* USER CODE END IWDG_Init 1 */
+  hiwdg.Instance = IWDG;
+  hiwdg.Init.Prescaler = IWDG_PRESCALER_32;
+  hiwdg.Init.Reload = 4095;
+  if (HAL_IWDG_Init(&hiwdg) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN IWDG_Init 2 */
+
+  /* USER CODE END IWDG_Init 2 */
 
 }
 
@@ -507,6 +546,24 @@ __weak void Start_CAN_TX_Task(void const * argument)
     osDelay(1);
   }
   /* USER CODE END Start_CAN_TX_Task */
+}
+
+/* USER CODE BEGIN Header_StartRPMTask */
+/**
+* @brief Function implementing the RPMTask thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_StartRPMTask */
+__weak void StartRPMTask(void const * argument)
+{
+  /* USER CODE BEGIN StartRPMTask */
+  /* Infinite loop */
+  for(;;)
+  {
+    osDelay(1);
+  }
+  /* USER CODE END StartRPMTask */
 }
 
  /**
