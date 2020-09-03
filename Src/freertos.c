@@ -134,11 +134,11 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
   case StopMotorRequest:
     if (buf[1] == DISABLEMOTOR)
     {
-      HAL_GPIO_WritePin(DrownMotor_GPIO_Port, DrownMotor_Pin, GPIO_PIN_SET);
+      HAL_GPIO_WritePin(DrownMotor_GPIO_Port, DrownMotor_Pin, GPIO_PIN_RESET);
     }
     if (buf[1] == ENABLEMOTOR)
     {
-      HAL_GPIO_WritePin(DrownMotor_GPIO_Port, DrownMotor_Pin, GPIO_PIN_RESET);
+      HAL_GPIO_WritePin(DrownMotor_GPIO_Port, DrownMotor_Pin, GPIO_PIN_SET);
     }
     break;
   default:
@@ -223,7 +223,7 @@ void StartDefaultTask(void const *argument)
       vTaskDelay(3000);
       if(SignalStatus == 0)
       {
-        HAL_GPIO_WritePin(DrownMotor_GPIO_Port, DrownMotor_Pin, GPIO_PIN_SET);
+        HAL_GPIO_WritePin(DrownMotor_GPIO_Port, DrownMotor_Pin, GPIO_PIN_RESET);
       }
     }
     ServoSetAngle(&ServoAccel);

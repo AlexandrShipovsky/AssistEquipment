@@ -38,8 +38,8 @@ extern "C"
 
 // ���������
 static uint16_t ServoNeutral = 500;//usec
-static uint16_t ServoMaxWidth = 1800;//2400; //usec
-static uint16_t ServoMinWidth = 1000;//544;  //usec
+static uint16_t ServoMaxWidth = 1600;//2400; //usec
+static uint16_t ServoMinWidth = 900;//544;  //usec
 #define ServoMaxAngle 100
 #define ServoMinAngle 0
 
