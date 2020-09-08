@@ -1,6 +1,6 @@
 ###############################################################################
 #
-# IAR ELF Linker V8.30.1.114/W32 for ARM                  03/Sep/2020  14:02:32
+# IAR ELF Linker V8.30.1.114/W32 for ARM                  04/Sep/2020  14:08:55
 # Copyright 2007-2018 IAR Systems AB.
 #
 #    Output file  =  
@@ -16,7 +16,7 @@
 #        электронное
 #        оборудование\firmware\AssistEquipment\EWARM\AssistEquipment\List\AssistEquipment.map
 #    Command line =  
-#        -f C:\Users\A146~1\AppData\Local\Temp\EW257B.tmp
+#        -f C:\Users\A146~1\AppData\Local\Temp\EW56F4.tmp
 #        ("C:\Users\Чистое небо\Desktop\Э.01.00.00
 #        Беспилотный
 #        мотодельтаплан\Вспомогательное
@@ -544,7 +544,7 @@ HAL_CAN_IRQHandler       0x800'235d  0x230  Code  Gb  stm32f1xx_hal_can.o [1]
 HAL_CAN_Init             0x800'1dfd  0x16c  Code  Gb  stm32f1xx_hal_can.o [1]
 HAL_CAN_MspInit          0x800'0a87   0x92  Code  Gb  stm32f1xx_hal_msp.o [1]
 HAL_CAN_RxFifo0MsgPendingCallback
-                         0x800'0c9b   0x66  Code  Gb  freertos.o [1]
+                         0x800'0c99   0x66  Code  Gb  freertos.o [1]
 HAL_CAN_Start            0x800'2077   0x5c  Code  Gb  stm32f1xx_hal_can.o [1]
 HAL_Delay                0x800'306d   0x28  Code  Wk  stm32f1xx_hal.o [1]
 HAL_GPIO_Init            0x800'1471  0x1b0  Code  Gb  stm32f1xx_hal_gpio.o [1]
@@ -618,9 +618,9 @@ ServoMinWidth           0x2000'000e    0x2  Data  Lc  servo.o [1]
 ServoSetAngle            0x800'27a3   0x9a  Code  Gb  servo.o [1]
 ServoStart               0x800'2795    0xe  Code  Gb  servo.o [1]
 SignalStatus            0x2000'14d6    0x1  Data  Gb  main.o [1]
-StartDefaultTask         0x800'0d73   0x5c  Code  Gb  freertos.o [1]
-StartRPMTask             0x800'0c77   0x24  Code  Gb  freertos.o [1]
-Start_CAN_TX_Task        0x800'0d01   0x72  Code  Gb  freertos.o [1]
+StartDefaultTask         0x800'0d71   0x5e  Code  Gb  freertos.o [1]
+StartRPMTask             0x800'0c77   0x22  Code  Gb  freertos.o [1]
+Start_CAN_TX_Task        0x800'0cff   0x72  Code  Gb  freertos.o [1]
 SysTick_Handler          0x800'26c5   0x28  Code  Gb  port.o [1]
 SystemClock_Config       0x800'0e8f   0x6e  Code  Gb  main.o [1]
 SystemCoreClock         0x2000'0008    0x4  Data  Gb  system_stm32f1xx.o [1]

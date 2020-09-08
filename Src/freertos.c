@@ -109,7 +109,7 @@ void StartRPMTask(void const * argument)
   for(;;)
   {
     vTaskDelay(1000);
-    RPM = 60*revs/400;
+    RPM = 60*revs/200;
     revs = 0;
   }
   /* USER CODE END StartRPMTask */
@@ -202,14 +202,15 @@ void StartDefaultTask(void const *argument)
   ServoAccel.Tim_PWM = &htim1;
   ServoAccel.TimChannel = TIM_CHANNEL_1;
   ServoAccel.DirOfRot = REVERSE_ROTATION;
-  //ServoAccel.angle = 50;
+  ServoAccel.angle = 0x00;
+  ServoStart(&ServoAccel);
 
   /* Infinite loop */
   for (;;)
   {
     if (SignalStatus == 2)
     {
-      ServoStart(&ServoAccel);
+      
     }
     else
     {
