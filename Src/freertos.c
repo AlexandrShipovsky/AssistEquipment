@@ -201,7 +201,7 @@ void StartDefaultTask(void const *argument)
 
   ServoAccel.Tim_PWM = &htim1;
   ServoAccel.TimChannel = TIM_CHANNEL_1;
-  ServoAccel.DirOfRot = REVERSE_ROTATION;
+  ServoAccel.DirOfRot = DIRECT_ROTATION;
   ServoAccel.angle = 0x00;
   ServoStart(&ServoAccel);
 
